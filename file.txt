@@ -10,3 +10,213 @@ o	Example (HTTPS):
 o	https://github.com/username/repository.git
 Select the branches you want (usually main or master) → Next.
 Choose the directory where Eclipse will store the repo → Finish.
+
+---------------
+how to push maven app to git hub: 
+git init 
+git remote add origin url
+git add . 
+git commit -m "message"
+******ensure you are the author 
+after clone into local :
+git clone url 
+notepad Dockerfile
+ren Dockerfile.txt Dockerfile
+(write docker file :
+FROM tomcat:9.0
+COPY target/prass.war /usr/local/tomcat/webapps/ROOT.war
+EXPOSE 8080
+CMD["catalina.sh","run"]
+)
+--
+after to build a image :
+docker build -t container-name .
+check : docker images 
+next :
+to run : docker images 
+docker run -p 7005:8082 image-name
+go to browser : localhost:7005
+
+next pushing to docker hub : 
+docker login 
+username : laxmiprasannach ( for docker hub )
+
+then 
+docker tag containername username/...
+docker push username/comatainername
+
+-------------
+sample project pomxml java :
+----------
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.23bd1a051c</groupId>
+  <artifactId>23bd1a051c_maven_java</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>23bd1a051c_maven_java</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+	   <dependency>
+	   <groupId>org.json</groupId>
+	   <artifactId>json</artifactId>
+	   <version>20230227</version>
+	</dependency>
+  </dependencies>
+  
+
+
+</project>
+-------------------------------
+for web app :
+-----------------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.23bd1a051c</groupId>
+  <artifactId>23bd1a051c_maven-webapp-new</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>23bd1a051c_maven-webapp-new Maven Webapp</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>23bd1a051c_maven-webapp-new</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.4.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>3.1.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
+------------------------------------------------------
+Unstage a file:
+
+git restore --staged file.txt
+
+------------
+Discard unstaged changes:
+git restore file.txt
+------------
+If you just committed but the message is wrong:
+git commit --amend -m "Correct commit message"
+-----------
+if pushed:
+git commit --amend -m "Correct commit message"
+git push origin branch-name --force
+--------------------
+to view commits in readbale :
+git log --oneline --graph --decorate
+---------
+You cloned a remote repository, but later you find that you need to push your changes to a different remote repository. How do you configure your local repository to push to this new remote?
+git remote set-url origin https://new-repo-url.git
+----------------
+if local is behind remote after pulling :
+If your local changes are unstaged or staged (not committed yet)
+
+You need to stash them before updating.
+
+git stash
+git pull origin branch-name
+git stash pop
+
+or 
+If your local changes are already committed
+No need to stash. Just update safely using rebase (keeps history clean):
+git pull --rebase origin branch-name
+-------------------
+Suppose you want to delete a branch named feature/x:
+
+Switch to a safe branch:
+git checkout main
+Delete the remote branch:
+git push origin --delete feature/x
+Delete your local branch:
+git branch -d feature/x
+Remove stale remote-tracking branches:
+git fetch --prune 
+--------------------------
+If the patch was created with git format-patch
+
+This preserves the original author, commit message, and history.
+Apply it using:
+
+git am fix-bug.patch
+or 
+If the patch was created with git diff
+
+Apply it like this:
+
+git apply fix-bug.patch
+
+
+This applies the changes to your working directory (like editing the files).
+You’ll need to stage and commit manually:
+
+git add .
+git commit -m "Apply patch: fix bug"
+---------------------------------
+
+
